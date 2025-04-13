@@ -47,7 +47,11 @@ export default function Dashboard() {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({
+        playlistTitle: playlistName || 'Liked Songs Playlist',
+        isPublic: !privatePlaylist
+      })
     });
     if (!res.ok) {
       console.error('Failed to create playlist:', res.statusText);
@@ -72,7 +76,6 @@ export default function Dashboard() {
       throw new Error('Failed to add tracks to playlist.');
     }
     const data = await res.json();
-    console.info('Tracks added to playlist:', data.added);
     return data.added;
   };
 
@@ -84,6 +87,9 @@ export default function Dashboard() {
         likedSongs > 500 ? (likedSongs > 1000 ? (likedSongs > 5000 ? '💀' : '🤯') : '🫡') : '👍';
       toast(`You have ${likedSongs} liked songs ${likedSongsEmoji}`);
       const songs = await getLikedSongs();
+      toast(
+        `Fetched all the songs! Starting to add them to ${playlistName || 'Liked Songs Playlist'} 🚀`
+      );
       const playlistId = await createPlaylist();
       await addTracksToPlaylist(playlistId, songs);
       toast('Playlist created successfully! 🎉');
@@ -97,13 +103,7 @@ export default function Dashboard() {
 
   /**
    * What's next?
-   * - ~~Add error handling for API calls~~
-   * - ~~Add loading states for the UI (eg. show a spinner while loading)~~
    * - Show the playlist URL and maybe the image of the playlist to click
-   * - ~~Add checkbox for private/public playlist~~
-   *  - Add functionality in backend
-   * - ~~Add input for playlist name~~
-   *  - Add functionality in backend
    * - Add image upload for playlist cover
    * - Check if playlist already exists and ask if the user wants to overwrite it
    */
@@ -169,6 +169,7 @@ export default function Dashboard() {
             </CollapsibleContent>
           </Collapsible>
 
+          {/* update because this looks not so nice lol */}
           {playlistUrl && (
             <p className="mt-6 text-white">
               ✅ Playlist created:{' '}
