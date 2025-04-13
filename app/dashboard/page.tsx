@@ -35,6 +35,7 @@ export default function Dashboard() {
   const [base64Image, setBase64Image] = useState('');
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  console.info('Base URL:', baseUrl);
 
   // biome-ignore lint: any is ok here
   const handleImageUpload = (e: any) => {
