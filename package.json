@@ -1,5 +1,5 @@
 {
-  "name": "spotishare",
+  "name": "shareify",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,13 +9,8 @@
     "lint": "next lint"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "biome format --write",
-      "biome lint --write"
-    ],
-    "*.{json,md}": [
-      "biome format --write"
-    ]
+    "*.{js,jsx,ts,tsx}": ["biome format --write", "biome lint --write"],
+    "*.{json,md}": ["biome format --write"]
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.0",
