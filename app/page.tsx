@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
+import Footer from '@/components/footer';
 
 export const revalidate = 0;
 
@@ -63,21 +64,8 @@ export default async function Home() {
         <div className="relative bottom-0 left-1/2 transform -translate-x-1/2 z-50 -mt-[500px]">
           <Image src="/pixel-man-cropped.svg" alt="pixel man" width={400} height={400} />
         </div>
-        <div className="relative bottom-0 -mt-16">
-          <div className="flex flex-col items-center">
-            <p className="text-gray-800 text-center mt-10">
-              <b>Shareify</b> is a <b>free</b> and <b>open-source</b> project. If you like it,
-              please consider supporting me on{' '}
-              <b>
-                <Link href="https://github.com/mikeunge">GitHub</Link>
-              </b>{' '}
-              or{' '}
-              <b>
-                <Link href="https://instagram.com/mikeunge">Instagram</Link>
-              </b>
-              .
-            </p>
-          </div>
+        <div className="relative bottom-0 -mt-24 pb-2">
+          <Footer />
         </div>
       </div>
     </div>
