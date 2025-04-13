@@ -1,23 +1,34 @@
 'use client';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+
 import { Toaster } from '@/components/ui/sonner';
 import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from '@/components/ui/dialog';
+
 import Spinner from '@/components/spinner';
 import Footer from '@/components/footer';
-import { Input } from '@/components/ui/input';
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [playlistUrl, setPlaylistUrl] = useState('');
   const [totalLikedSongs, setTotalLikedSongs] = useState(0);
   const [likedSongs, setLikedSongs] = useState([]);
-  const [privatePlaylist, setPrivatePlaylist] = useState(false);
-  const [showExportOptions, setShowExportOptions] = useState(false);
+  const [privatePlaylist, setPrivatePlaylist] = useState(true);
   const [playlistName, setPlaylistName] = useState('');
+  const [playlistCover, setPlaylistCover] = useState<File | null>(null);
 
   const getTotalLikedSongs = async (): Promise<number> => {
     const res = await fetch('/api/likes', { method: 'GET', credentials: 'include' });
@@ -138,36 +149,72 @@ export default function Dashboard() {
             {loading ? 'Creating Playlist...' : 'Create Playlist from Liked Songs'}
           </button>
 
-          <Collapsible className="mt-4">
-            <CollapsibleTrigger
-              className="text-white"
-              onClick={() => setShowExportOptions(!showExportOptions)}
-            >
-              <div className="flex flex-row items-center justify-center">
-                <div className="mr-2">Show export options</div>
-                {showExportOptions ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
-              </div>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="mt-4">
-              <Input
-                className="bg-white"
-                type="text"
-                placeholder="Playlist name..."
-                value={playlistName}
-                onChange={(e) => setPlaylistName(e.target.value)}
-              />
-              <div className="flex flex-row items-center justify-center mt-4">
-                <Label htmlFor="privatePlaylist" className="mr-2 text-white">
-                  Create private playlist?
-                </Label>
-                <Switch
-                  id="privatePlaylist"
-                  checked={privatePlaylist}
-                  onCheckedChange={setPrivatePlaylist}
-                />
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          <div className="mt-4">
+            <Dialog>
+              <DialogTrigger asChild={true}>
+                <Button variant="outline">Settings</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Settings</DialogTitle>
+                  <DialogDescription>
+                    Customize your export settings here. Set your playlist name, choose its privacy,
+                    and upload a cover image.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Playlist Title
+                    </Label>
+                    <Input
+                      id="name"
+                      value={playlistName}
+                      onChange={(e) => setPlaylistName(e.target.value)}
+                      placeholder="Liked Songs Playlist"
+                      className="col-span-3 bg-white"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="picture">Cover Image</Label>
+                    <Input
+                      id="picture"
+                      className="col-span-3 bg-white"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) {
+                          toast('No file selected. Please choose a valid image file. 😵‍💫');
+                          return;
+                        }
+                        setPlaylistCover(file);
+                      }}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-end gap-4">
+                    <Label htmlFor="privatePlaylist" className="mr-2">
+                      Create public playlist?
+                    </Label>
+                    <Switch
+                      id="privatePlaylist"
+                      checked={privatePlaylist}
+                      onCheckedChange={setPrivatePlaylist}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <DialogClose asChild={true}>
+                    <Button type="button" variant="default">
+                      Close
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
 
           {/* update because this looks not so nice lol */}
           {playlistUrl && (
