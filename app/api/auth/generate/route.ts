@@ -4,6 +4,7 @@ import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SCOPE } from '@/lib/spotify';
 export async function GET() {
   const scopes = [
     SCOPE.UserLibraryRead,
+    SCOPE.UserImageUpload,
     SCOPE.PlaylistModifyPrivate,
     SCOPE.PlaylistModifyPublic
   ].join(' ');
