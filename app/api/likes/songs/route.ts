@@ -12,7 +12,6 @@ export async function GET() {
     );
   }
 
-  // TODO: think about if we should get this from the client or fetch again here
   const result = await getLikedSongs(accessToken, 1, 0);
   if (!result.ok) {
     return NextResponse.json({ error: 'Failed to get total of liked songs.' }, { status: 500 });

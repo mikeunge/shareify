@@ -4,6 +4,7 @@ export const SPOTIFY_REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI!;
 
 export enum SCOPE {
   UserLibraryRead = 'user-library-read',
+  UserImageUpload = 'ugc-image-upload',
   PlaylistModifyPrivate = 'playlist-modify-private',
   PlaylistModifyPublic = 'playlist-modify-public'
 }
@@ -26,6 +27,34 @@ export const getSpotifyProfile = async (accessToken: string): Promise<Response> 
       Authorization: `Bearer ${accessToken}`
     }
   });
+};
+
+export const getPlaylistCover = async (
+  accesToken: string,
+  playlistId: string
+): Promise<Response> => {
+  return fetch(`https://api.spotify.com/v1/playlists/${playlistId}/images`, {
+    headers: {
+      Authorization: `Bearer ${accesToken}`
+    }
+  });
+};
+
+export const setPlaylistCover = async (
+  accessToken: string,
+  playlistId: string,
+  image: string
+): Promise<Response> => {
+  const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/images`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'image/jpeg'
+    },
+    body: image
+  });
+  console.log('Response from setting playlist cover:', res);
+  return res;
 };
 
 export const createPlaylist = async (
