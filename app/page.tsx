@@ -6,7 +6,10 @@ import Footer from '@/components/footer';
 export const revalidate = 0;
 
 export default async function Home() {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  let baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  if (baseUrl.endsWith('/')) {
+    baseUrl = baseUrl.slice(0, -1);
+  }
   const res = await fetch(`${baseUrl}/api/auth/generate`, {
     cache: 'no-store'
   });
