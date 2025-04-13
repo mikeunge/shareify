@@ -31,8 +31,34 @@ export default function Dashboard() {
   const [likedSongs, setLikedSongs] = useState([]);
   const [privatePlaylist, setPrivatePlaylist] = useState(true);
   const [playlistName, setPlaylistName] = useState('');
-  // const [playlistCover, setPlaylistCover] = useState<File | null>(null);
   const [createdPlaylistCover, setCreatedPlaylistCover] = useState<string>('');
+  const [base64Image, setBase64Image] = useState('');
+
+  // biome-ignore lint: any is ok here
+  const handleImageUpload = (e: any) => {
+    const file = e.target.files[0];
+    if (!file) {
+      toast('No file selected, please try again.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        const base64Size = (reader.result.length * 3) / 4 - (reader.result.endsWith('==') ? 2 : 1);
+        if (base64Size > 256 * 1024) {
+          toast('Image size exceeds limit, please choose a smaller image and try again.');
+          return;
+        }
+        const base64Image = reader.result
+          .replace('data:image/jpeg;base64,', '')
+          .replace('data:image/png;base64,', '');
+        setBase64Image(base64Image);
+      } else {
+        toast('Failed to read file, please try again.');
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const getTotalLikedSongs = async (): Promise<number> => {
     const res = await fetch('/api/likes', { method: 'GET', credentials: 'include' });
@@ -67,6 +93,23 @@ export default function Dashboard() {
     }
     const data = await res.json();
     setCreatedPlaylistCover(data.url);
+  };
+
+  const setPlaylistCover = async (playlistId: string): Promise<void> => {
+    const res = await fetch('/api/playlist/cover', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ playlistId, image: base64Image })
+    });
+    if (!res.ok) {
+      console.error('Failed to set playlist cover:', res.statusText);
+      toast('Failed to set playlist cover.');
+      return;
+    }
+    toast('Cover image uploaded successfully! 🎨');
   };
 
   const createPlaylist = async (): Promise<string> => {
@@ -120,6 +163,9 @@ export default function Dashboard() {
       );
       const playlistId = await createPlaylist();
       await addTracksToPlaylist(playlistId, songs);
+      if (base64Image.length > 0) {
+        await setPlaylistCover(playlistId);
+      }
       await getPlaylistCover(playlistId);
       toast('Playlist created successfully! 🎉');
     } catch (error: unknown) {
@@ -142,7 +188,15 @@ export default function Dashboard() {
         ></div>
 
         <div className="flex flex-col items-center justify-center z-10">
-          <h1 className="text-6xl text-white font-bold mb-4">Export your liked songs</h1>
+          {!loading && !createdPlaylistCover && (
+            <h1 className="text-6xl text-white font-bold mb-4">Export your liked songs</h1>
+          )}
+          {loading && (
+            <h1 className="text-6xl text-white font-bold mb-4">Exporting your liked songs</h1>
+          )}
+          {!loading && createdPlaylistCover && (
+            <h1 className="text-6xl text-white font-bold mb-4">Exported your liked songs</h1>
+          )}
 
           {!loading && createdPlaylistCover && (
             <h4 className="text-lg text-white -mt-2">Successfully exported your likes!</h4>
@@ -194,25 +248,16 @@ export default function Dashboard() {
                         />
                       </div>
 
-                      {/**
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="picture">Cover Image</Label>
                         <Input
                           id="picture"
                           className="col-span-3 bg-white"
                           type="file"
-                          accept="image/*"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (!file) {
-                              toast('No file selected. Please choose a valid image file. 😵‍💫');
-                              return;
-                            }
-                            setPlaylistCover(file);
-                          }}
+                          accept="image/jpg,image/jpeg"
+                          onChange={handleImageUpload}
                         />
                       </div>
-                      */}
 
                       <div className="flex items-center justify-end gap-4">
                         <Label htmlFor="privatePlaylist" className="mr-2">
