@@ -17,31 +17,30 @@ export default async function Home() {
       {/* Hero/Header Section */}
       <div
         className="min-h-screen bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/background.svg')" }}
-      >
-        <div className="absolute top-0 w-full h-[35%]">
-          <Image
-            src="/logo.svg"
-            alt="shareify"
-            fill={true}
-            className="object-contain"
-            priority={true}
-          />
-        </div>
-        <div className="absolute w-full h-[60%]">
-          <Image
-            src="/iPod-cropped.svg"
-            alt="iPod"
-            fill={true}
-            className="object-contain"
-            priority={true}
-          />
-        </div>
-        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-50">
-          <div className="animate-bounce text-white">
-            <h1 className="text-2xl font-bold text-white -ml-12 -mb-4">Get Started</h1>
-            <ChevronDown size={48} />
-          </div>
+        style={{ backgroundImage: "url('/background.svg')", filter: 'blur(8px)' }}
+      ></div>
+      <div className="absolute top-0 w-full h-[35%]">
+        <Image
+          src="/logo.svg"
+          alt="shareify"
+          fill={true}
+          className="object-contain"
+          priority={true}
+        />
+      </div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-[60%]">
+        <Image
+          src="/iPod-cropped.svg"
+          alt="iPod"
+          fill={true}
+          className="object-contain"
+          priority={true}
+        />
+      </div>
+      <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="animate-bounce text-white">
+          <h1 className="text-2xl font-bold text-white -ml-12 -mb-4">Get Started</h1>
+          <ChevronDown size={48} />
         </div>
       </div>
 
