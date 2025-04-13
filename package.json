@@ -3,19 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development next dev --turbopack",
-    "build": "NODE_ENV=production next build",
-    "start": "NODE_ENV=production start",
+    "dev": "NODE_ENV=local next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "biome format --write",
-      "biome lint --write"
-    ],
-    "*.{json,md}": [
-      "biome format --write"
-    ]
+    "*.{js,jsx,ts,tsx}": ["biome format --write", "biome lint --write"],
+    "*.{json,md}": ["biome format --write"]
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.4",

@@ -34,6 +34,8 @@ export default function Dashboard() {
   const [createdPlaylistCover, setCreatedPlaylistCover] = useState<string>('');
   const [base64Image, setBase64Image] = useState('');
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
   // biome-ignore lint: any is ok here
   const handleImageUpload = (e: any) => {
     const file = e.target.files[0];
@@ -61,7 +63,7 @@ export default function Dashboard() {
   };
 
   const getTotalLikedSongs = async (): Promise<number> => {
-    const res = await fetch('/api/likes', { method: 'GET', credentials: 'include' });
+    const res = await fetch(`${baseUrl}/api/likes`, { method: 'GET', credentials: 'include' });
     if (!res.ok) {
       console.error('Failed to fetch total liked songs:', res.statusText);
       throw new Error('Failed to fetch total liked songs.');
@@ -72,7 +74,10 @@ export default function Dashboard() {
   };
 
   const getLikedSongs = async (): Promise<string[]> => {
-    const res = await fetch('/api/likes/songs', { method: 'GET', credentials: 'include' });
+    const res = await fetch(`${baseUrl}/api/likes/songs`, {
+      method: 'GET',
+      credentials: 'include'
+    });
     if (!res.ok) {
       console.error('Failed to fetch liked songs:', res.statusText);
       throw new Error('Failed to fetch liked songs.');
@@ -83,7 +88,7 @@ export default function Dashboard() {
   };
 
   const getPlaylistCover = async (playlistId: string): Promise<void> => {
-    const res = await fetch(`/api/playlist/cover?id=${playlistId}`, {
+    const res = await fetch(`${baseUrl}/api/playlist/cover?id=${playlistId}`, {
       method: 'GET',
       credentials: 'include'
     });
@@ -96,7 +101,7 @@ export default function Dashboard() {
   };
 
   const setPlaylistCover = async (playlistId: string): Promise<void> => {
-    const res = await fetch('/api/playlist/cover', {
+    const res = await fetch(`${baseUrl}/api/playlist/cover`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -113,7 +118,7 @@ export default function Dashboard() {
   };
 
   const createPlaylist = async (): Promise<string> => {
-    const res = await fetch('/api/playlist/create', {
+    const res = await fetch(`${baseUrl}/api/playlist/create`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -134,7 +139,7 @@ export default function Dashboard() {
   };
 
   const addTracksToPlaylist = async (playlistId: string, songs: string[]): Promise<void> => {
-    const res = await fetch('/api/playlist/add', {
+    const res = await fetch(`${baseUrl}/api/playlist/add`, {
       method: 'POST',
       credentials: 'include',
       headers: {
