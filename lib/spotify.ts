@@ -28,6 +28,17 @@ export const getSpotifyProfile = async (accessToken: string): Promise<Response> 
   });
 };
 
+export const getPlaylistCover = async (
+  accesToken: string,
+  playlistId: string
+): Promise<Response> => {
+  return fetch(`https://api.spotify.com/v1/playlists/${playlistId}/images`, {
+    headers: {
+      Authorization: `Bearer ${accesToken}`
+    }
+  });
+};
+
 export const createPlaylist = async (
   userId: string,
   accessToken: string,
