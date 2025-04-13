@@ -79,29 +79,36 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="p-6 text-center">
-      <h1 className="text-2xl font-bold mb-4">Your Liked Songs</h1>
-      {loading && <p className="mb-4">Total songs: {totalLikedSongs}</p>}
-      <button
-        onClick={handleCreate}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        disabled={loading}
+    <main className="min-h-screen bg-secondary">
+      <div
+        className="min-h-screen bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: "url('/background.svg')" }}
       >
-        {loading ? `Creating Playlist... ` : 'Create Playlist from Liked Songs'}
-      </button>
-      {playlistUrl && (
-        <p className="mt-6">
-          ✅ Playlist created:{' '}
-          <a
-            href={playlistUrl}
-            target="_blank"
-            className="text-green-600 underline"
-            rel="noreferrer"
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="text-4xl text-white font-bold mb-4">Your Liked Songs</h1>
+          {loading && <p className="mb-4 text-white">Total songs: {totalLikedSongs}</p>}
+          <button
+            onClick={handleCreate}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            disabled={loading}
           >
-            Open in Spotify
-          </a>
-        </p>
-      )}
+            {loading ? 'Creating Playlist...' : 'Create Playlist from Liked Songs'}
+          </button>
+          {playlistUrl && (
+            <p className="mt-6 text-white">
+              ✅ Playlist created:{' '}
+              <a
+                href={playlistUrl}
+                target="_blank"
+                className="text-green-600 underline"
+                rel="noreferrer"
+              >
+                Open in Spotify
+              </a>
+            </p>
+          )}
+        </div>
+      </div>
     </main>
   );
 }

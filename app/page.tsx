@@ -1,5 +1,6 @@
 'use client';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { ChevronDown } from 'lucide-react';
 
 export default function Home() {
   const handleLogin = async () => {
@@ -9,15 +10,47 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-5xl font-bold text-center">Spotify Like Exporter</h1>
-      <h4 className="text-xl text-center mt-2">
-        Export your (<i>private</i>) Spotify liked songs into a public playlist.
-      </h4>
-      <div className="mt-6">
-        <Button className="px-16 py-4 hover:cursor-pointer" variant="ghost" onClick={handleLogin}>
-          Login with Spotify
-        </Button>
+    <div className="min-h-screen bg-secondary">
+      {/* Hero/Header Section */}
+      <div
+        className="min-h-screen bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: "url('/background.svg')" }}
+      >
+        <div className="absolute top-0 w-full h-[35%]">
+          <Image
+            src="/logo.svg"
+            alt="shareify"
+            fill={true}
+            className="object-contain"
+            priority={true}
+          />
+        </div>
+        <div className="absolute w-full h-[60%]">
+          <Image
+            src="/iPod-cropped.svg"
+            alt="iPod"
+            fill={true}
+            className="object-contain"
+            priority={true}
+          />
+        </div>
+        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-50">
+          <div className="animate-bounce text-white">
+            <h1 className="text-2xl font-bold text-white -ml-12 -mb-4">Get Started</h1>
+            <ChevronDown size={48} />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="p-10 flex flex-col items-center">
+        <p className="text-2xl font-light text-gray-800 text-center">
+          Your Liked Songs are a whole personality - now you can share them with one click instead
+          of manually building a playlist.
+        </p>
+        <div className="hover:cursor-pointer transition-transform duration-100 transform hover:scale-110 -mt-10">
+          <Image src="/sign-in.svg" alt="shareify" width={400} height={200} onClick={handleLogin} />
+        </div>
       </div>
     </div>
   );
