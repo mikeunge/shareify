@@ -53,7 +53,6 @@ export const setPlaylistCover = async (
     },
     body: image
   });
-  console.log('Response from setting playlist cover:', res);
   return res;
 };
 
