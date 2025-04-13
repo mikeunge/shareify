@@ -31,7 +31,6 @@ export async function GET() {
 
   let fetched = 0;
   while (fetched < total) {
-    console.info('Fetching liked songs', fetched, 'of', total);
     const likedRes = await getLikedSongs(accessToken, limit, fetched);
     if (!likedRes.ok) {
       return NextResponse.json({ error: 'Failed to get liked songs' }, { status: 500 });

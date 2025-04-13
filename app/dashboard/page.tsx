@@ -1,13 +1,25 @@
 'use client';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Toaster } from '@/components/ui/sonner';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import Spinner from '@/components/spinner';
+import Footer from '@/components/footer';
+import { Input } from '@/components/ui/input';
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [playlistUrl, setPlaylistUrl] = useState('');
   const [totalLikedSongs, setTotalLikedSongs] = useState(0);
   const [likedSongs, setLikedSongs] = useState([]);
+  const [privatePlaylist, setPrivatePlaylist] = useState(false);
+  const [showExportOptions, setShowExportOptions] = useState(false);
+  const [playlistName, setPlaylistName] = useState('');
 
-  const getTotalLikedSongs = async (): Promise<void> => {
+  const getTotalLikedSongs = async (): Promise<number> => {
     const res = await fetch('/api/likes', { method: 'GET', credentials: 'include' });
     if (!res.ok) {
       console.error('Failed to fetch total liked songs:', res.statusText);
@@ -15,6 +27,7 @@ export default function Dashboard() {
     }
     const data = await res.json();
     setTotalLikedSongs(data.total);
+    return data.total;
   };
 
   const getLikedSongs = async (): Promise<string[]> => {
@@ -66,42 +79,115 @@ export default function Dashboard() {
   const handleCreate = async () => {
     try {
       setLoading(true);
-      await getTotalLikedSongs();
+      const likedSongs = await getTotalLikedSongs();
+      const likedSongsEmoji =
+        likedSongs > 500 ? (likedSongs > 1000 ? (likedSongs > 5000 ? '💀' : '🤯') : '🫡') : '👍';
+      toast(`You have ${likedSongs} liked songs ${likedSongsEmoji}`);
       const songs = await getLikedSongs();
       const playlistId = await createPlaylist();
       await addTracksToPlaylist(playlistId, songs);
-    } catch (error) {
-      console.error('Error creating playlist:', error);
-      return;
+      toast('Playlist created successfully! 🎉');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      toast(`An error occurred: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
   };
 
+  /**
+   * What's next?
+   * - ~~Add error handling for API calls~~
+   * - ~~Add loading states for the UI (eg. show a spinner while loading)~~
+   * - Show the playlist URL and maybe the image of the playlist to click
+   * - ~~Add checkbox for private/public playlist~~
+   *  - Add functionality in backend
+   * - ~~Add input for playlist name~~
+   *  - Add functionality in backend
+   * - Add image upload for playlist cover
+   * - Check if playlist already exists and ask if the user wants to overwrite it
+   */
+
   return (
-    <main className="p-6 text-center">
-      <h1 className="text-2xl font-bold mb-4">Your Liked Songs</h1>
-      {loading && <p className="mb-4">Total songs: {totalLikedSongs}</p>}
-      <button
-        onClick={handleCreate}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        disabled={loading}
-      >
-        {loading ? `Creating Playlist... ` : 'Create Playlist from Liked Songs'}
-      </button>
-      {playlistUrl && (
-        <p className="mt-6">
-          ✅ Playlist created:{' '}
-          <a
-            href={playlistUrl}
-            target="_blank"
-            className="text-green-600 underline"
-            rel="noreferrer"
+    <main className="min-h-screen bg-secondary">
+      <div className="min-h-screen relative flex items-center justify-center">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/background.svg')",
+            filter: 'blur(8px)'
+          }}
+        ></div>
+
+        {/* Loading spinner */}
+        {loading && (
+          <div className="absolute inset-0 bg-black opacity-30 flex items-center justify-center">
+            <div className="mt-80">
+              <Spinner size={100} />
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-col items-center justify-center z-10">
+          <h1 className="text-6xl text-white font-bold mb-4">Export your liked songs</h1>
+          <button
+            onClick={handleCreate}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            disabled={loading}
           >
-            Open in Spotify
-          </a>
-        </p>
-      )}
+            {loading ? 'Creating Playlist...' : 'Create Playlist from Liked Songs'}
+          </button>
+
+          <Collapsible className="mt-4">
+            <CollapsibleTrigger
+              className="text-white"
+              onClick={() => setShowExportOptions(!showExportOptions)}
+            >
+              <div className="flex flex-row items-center justify-center">
+                <div className="mr-2">Show export options</div>
+                {showExportOptions ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-4">
+              <Input
+                className="bg-white"
+                type="text"
+                placeholder="Playlist name..."
+                value={playlistName}
+                onChange={(e) => setPlaylistName(e.target.value)}
+              />
+              <div className="flex flex-row items-center justify-center mt-4">
+                <Label htmlFor="privatePlaylist" className="mr-2 text-white">
+                  Create private playlist?
+                </Label>
+                <Switch
+                  id="privatePlaylist"
+                  checked={privatePlaylist}
+                  onCheckedChange={setPrivatePlaylist}
+                />
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {playlistUrl && (
+            <p className="mt-6 text-white">
+              ✅ Playlist created:{' '}
+              <a
+                href={playlistUrl}
+                target="_blank"
+                className="text-green-600 underline"
+                rel="noreferrer"
+              >
+                Open in Spotify
+              </a>
+            </p>
+          )}
+        </div>
+        <div className="absolute bottom-0 -mt-24 pb-2">
+          <Footer textColor="text-white" />
+        </div>
+      </div>
+      <Toaster />
     </main>
   );
 }

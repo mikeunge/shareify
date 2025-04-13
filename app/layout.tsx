@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Spotify Like Exporter',
+  title: 'Shareify - Share your liked songs',
   description: 'Export your (private) Spotify liked songs into a public playlist.'
 };
 

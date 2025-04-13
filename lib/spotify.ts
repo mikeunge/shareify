@@ -32,7 +32,7 @@ export const createPlaylist = async (
   userId: string,
   accessToken: string,
   playlistName = 'Liked Songs Playlist',
-  playlistDescription = 'Created with SpotiShare <3',
+  playlistDescription = 'Created with love by Shareify <3',
   publicPlaylist = true
 ): Promise<Response> => {
   return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
