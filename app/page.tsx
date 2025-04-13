@@ -1,13 +1,15 @@
-'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 
-export default function Home() {
-  const handleLogin = async () => {
-    const res = await fetch('/api/auth/generate');
-    const { url } = await res.json();
-    window.location.href = url;
-  };
+export const revalidate = 0;
+
+export default async function Home() {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/api/auth/generate`, {
+    cache: 'no-store'
+  });
+  const { url } = await res.json();
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -43,13 +45,39 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <div className="p-10 flex flex-col items-center">
-        <p className="text-2xl font-light text-gray-800 text-center">
-          Your Liked Songs are a whole personality - now you can share them with one click instead
-          of manually building a playlist.
+      <div className="flex flex-col items-center mt-20">
+        <p className="text-2xl lg:text-5xl w-full md:w-1/3 font-light text-gray-800 text-center">
+          <b>Your Liked Songs</b> are a whole personality - now you can share them with{' '}
+          <b>one click </b>
+          instead of manually <b>building a playlist</b>.
         </p>
-        <div className="hover:cursor-pointer transition-transform duration-100 transform hover:scale-110 -mt-10">
-          <Image src="/sign-in.svg" alt="shareify" width={400} height={200} onClick={handleLogin} />
+        {/* TODO: transform png to webp */}
+        <div className="mt-24 flex flex-col items-center">
+          <Image src="/spotify.png" alt="shareify" width={100} height={100} />
+          <div className="transition-transform duration-100 transform hover:scale-110 -mt-16">
+            <Link href={url}>
+              <Image src="/sign-in.svg" alt="shareify" width={400} height={200} />
+            </Link>
+          </div>
+        </div>
+        <div className="relative bottom-0 left-1/2 transform -translate-x-1/2 z-50 -mt-[500px]">
+          <Image src="/pixel-man-cropped.svg" alt="pixel man" width={400} height={400} />
+        </div>
+        <div className="relative bottom-0 -mt-16">
+          <div className="flex flex-col items-center">
+            <p className="text-gray-800 text-center mt-10">
+              <b>Shareify</b> is a <b>free</b> and <b>open-source</b> project. If you like it,
+              please consider supporting me on{' '}
+              <b>
+                <Link href="https://github.com/mikeunge">GitHub</Link>
+              </b>{' '}
+              or{' '}
+              <b>
+                <Link href="https://instagram.com/mikeunge">Instagram</Link>
+              </b>
+              .
+            </p>
+          </div>
         </div>
       </div>
     </div>
