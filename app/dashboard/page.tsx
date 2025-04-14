@@ -27,8 +27,6 @@ import Footer from '@/components/footer';
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [playlistUrl, setPlaylistUrl] = useState('');
-  const [totalLikedSongs, setTotalLikedSongs] = useState(0);
-  const [likedSongs, setLikedSongs] = useState([]);
   const [privatePlaylist, setPrivatePlaylist] = useState(true);
   const [playlistName, setPlaylistName] = useState('');
   const [createdPlaylistCover, setCreatedPlaylistCover] = useState<string>('');
@@ -72,7 +70,6 @@ export default function Dashboard() {
       throw new Error('Failed to fetch total liked songs.');
     }
     const data = await res.json();
-    setTotalLikedSongs(data.total);
     return data.total;
   };
 
@@ -86,7 +83,6 @@ export default function Dashboard() {
       throw new Error('Failed to fetch liked songs.');
     }
     const data = await res.json();
-    setLikedSongs(data.songs);
     return data.songs;
   };
 
