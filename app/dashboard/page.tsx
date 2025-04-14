@@ -38,7 +38,6 @@ export default function Dashboard() {
   if (baseUrl.endsWith('/')) {
     baseUrl = baseUrl.slice(0, -1);
   }
-  console.info('Base URL:', baseUrl);
 
   // biome-ignore lint: any is ok here
   const handleImageUpload = (e: any) => {
