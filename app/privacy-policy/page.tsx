@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">Spotify Login</h2>
       <p className="mb-4">
-        We use Spotify’s OAuth login solely to access your liked songs and create a playlist on your
+        We use Spotify's OAuth login solely to access your liked songs and create a playlist on your
         behalf. Your access token is used securely on the server and is never stored or shared.
       </p>
 
@@ -47,8 +47,8 @@ export default function PrivacyPolicy() {
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">Questions</h2>
       <p className="mb-4">
-        If you have any questions or concerns about this privacy policy, feel free to reach out via
-        the contact section of the app.
+        If you have any questions or concerns about this privacy policy, feel free to reach out to
+        <a href="mailto:mikeunge@protonmail.com"> mikeunge@protonmail.com</a>.
       </p>
     </div>
   );

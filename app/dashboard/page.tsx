@@ -186,24 +186,31 @@ export default function Dashboard() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/background.svg')",
-            filter: 'blur(8px)'
+            backgroundImage: "url('/background.svg')"
           }}
         ></div>
 
         <div className="flex flex-col items-center justify-center z-10">
           {!loading && !createdPlaylistCover && (
-            <h1 className="text-6xl text-white font-bold mb-4">Export your liked songs</h1>
+            <h1 className="text-6xl text-white font-bold mb-4 drop-shadow-lg">
+              Export your liked songs
+            </h1>
           )}
           {loading && (
-            <h1 className="text-6xl text-white font-bold mb-4">Exporting your liked songs</h1>
+            <h1 className="text-6xl text-white font-bold mb-4 drop-shadow-lg">
+              Exporting your liked songs
+            </h1>
           )}
           {!loading && createdPlaylistCover && (
-            <h1 className="text-6xl text-white font-bold mb-4">Exported your liked songs</h1>
+            <h1 className="text-6xl text-white font-bold mb-4 drop-shadow-lg">
+              Exported your liked songs
+            </h1>
           )}
 
           {!loading && createdPlaylistCover && (
-            <h4 className="text-lg text-white -mt-2">Successfully exported your likes!</h4>
+            <h4 className="text-lg text-white -mt-2 drop-shadow-lg">
+              Successfully exported your likes!
+            </h4>
           )}
 
           {/* Loading spinner */}
@@ -217,7 +224,7 @@ export default function Dashboard() {
             <>
               <button
                 onClick={handleCreate}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 drop-shadow-lg"
                 disabled={loading}
               >
                 Create Playlist from Liked Songs
@@ -226,12 +233,14 @@ export default function Dashboard() {
               <div className="mt-4">
                 <Dialog>
                   <DialogTrigger asChild={true}>
-                    <Button variant="outline">Settings</Button>
+                    <Button variant="outline" className="drop-shadow-lg">
+                      Settings
+                    </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                      <DialogTitle>Settings</DialogTitle>
-                      <DialogDescription>
+                      <DialogTitle className="drop-shadow-lg">Settings</DialogTitle>
+                      <DialogDescription className="drop-shadow-lg">
                         Customize your export settings here. Set your playlist name, choose its
                         privacy, and upload a cover image.
                         <br />
@@ -240,7 +249,7 @@ export default function Dashboard() {
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
                       <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
+                        <Label htmlFor="name" className="text-right drop-shadow-lg">
                           Playlist Title
                         </Label>
                         <Input
@@ -253,7 +262,9 @@ export default function Dashboard() {
                       </div>
 
                       <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="picture">Cover Image</Label>
+                        <Label htmlFor="picture" className="drop-shadow-lg">
+                          Cover Image
+                        </Label>
                         <Input
                           id="picture"
                           className="col-span-3 bg-white"
@@ -264,7 +275,7 @@ export default function Dashboard() {
                       </div>
 
                       <div className="flex items-center justify-end gap-4">
-                        <Label htmlFor="privatePlaylist" className="mr-2">
+                        <Label htmlFor="privatePlaylist" className="mr-2 drop-shadow-lg">
                           Create public playlist?
                         </Label>
                         <Switch
@@ -295,7 +306,11 @@ export default function Dashboard() {
                 </Link>
               </div>
               <div className="mt-6 flex flex-col items-center hover:scale-105 transition-transform duration-300">
-                <Link href={playlistUrl} target="_blank" className="text-lg font-bold text-white">
+                <Link
+                  href={playlistUrl}
+                  target="_blank"
+                  className="text-lg font-bold text-white drop-shadow-lg"
+                >
                   View Playlist <ChevronRight className="inline" />
                 </Link>
               </div>

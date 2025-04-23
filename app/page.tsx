@@ -20,7 +20,7 @@ export default async function Home() {
       {/* Hero/Header Section */}
       <div
         className="min-h-screen bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/background.svg')", filter: 'blur(8px)' }}
+        style={{ backgroundImage: "url('/background.svg')" }}
       ></div>
       <div className="absolute top-0 w-full h-[35%]">
         <Image
@@ -40,10 +40,10 @@ export default async function Home() {
           priority={true}
         />
       </div>
-      <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="animate-bounce text-white">
-          <h1 className="text-2xl font-bold text-white -ml-12 -mb-4">Get Started</h1>
-          <ChevronDown size={48} />
+      <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center w-full">
+        <div className="animate-bounce flex flex-col items-center">
+          <h1 className="text-2xl font-bold text-white text-center -mb-2">Get Started</h1>
+          <ChevronDown size={48} className="text-white" />
         </div>
       </div>
 
@@ -55,7 +55,7 @@ export default async function Home() {
           instead of manually <b>building a playlist</b>.
         </p>
         {/* TODO: transform png to webp */}
-        <div className="mt-24 flex flex-col items-center">
+        <div className="md:mt-24 mt-8 mb-8 flex flex-col items-center">
           <Image src="/spotify.png" alt="shareify" width={100} height={100} />
           <div className="transition-transform duration-100 transform hover:scale-110 -mt-16">
             <Link href={url}>
@@ -63,7 +63,7 @@ export default async function Home() {
             </Link>
           </div>
         </div>
-        <div className="relative bottom-0 left-1/2 transform -translate-x-1/2 z-50 -mt-[500px]">
+        <div className="hidden md:block relative bottom-0 left-1/2 transform -translate-x-1/2 z-50 -mt-[500px]">
           <Image src="/pixel-man-cropped.svg" alt="pixel man" width={400} height={400} />
         </div>
         <div className="relative bottom-0 -mt-24 pb-2">
