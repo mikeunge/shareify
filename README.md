@@ -21,5 +21,6 @@ A simple web app that lets you export your **private liked songs** from Spotify 
 
 ```bash
 git clone https://github.com/mikeunge/shareify.git
-cd spotify-liked-exporter
+cd shareify
 pnpm install
+```
