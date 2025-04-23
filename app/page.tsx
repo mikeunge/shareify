@@ -49,7 +49,7 @@ export default async function Home() {
 
       {/* Main Content */}
       <div className="flex flex-col items-center mt-20">
-        <p className="text-2xl lg:text-5xl w-full md:w-1/3 font-light text-gray-800 text-center">
+        <p className="text-3xl lg:text-5xl w-full md:w-2/3 font-light text-gray-800 text-center">
           <b>Your Liked Songs</b> are a whole personality - now you can share them with{' '}
           <b>one click </b>
           instead of manually <b>building a playlist</b>.

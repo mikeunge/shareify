@@ -192,23 +192,23 @@ export default function Dashboard() {
 
         <div className="flex flex-col items-center justify-center z-10">
           {!loading && !createdPlaylistCover && (
-            <h1 className="text-6xl text-white font-bold mb-4 drop-shadow-lg">
+            <h1 className="text-4xl sm:text-6xl text-white font-bold mb-4 drop-shadow-lg text-center">
               Export your liked songs
             </h1>
           )}
           {loading && (
-            <h1 className="text-6xl text-white font-bold mb-4 drop-shadow-lg">
+            <h1 className="text-4xl sm:text-6xl text-white font-bold mb-4 drop-shadow-lg text-center">
               Exporting your liked songs
             </h1>
           )}
           {!loading && createdPlaylistCover && (
-            <h1 className="text-6xl text-white font-bold mb-4 drop-shadow-lg">
+            <h1 className="text-4xl sm:text-6xl text-white font-bold mb-4 drop-shadow-lg text-center">
               Exported your liked songs
             </h1>
           )}
 
           {!loading && createdPlaylistCover && (
-            <h4 className="text-lg text-white -mt-2 drop-shadow-lg">
+            <h4 className="text-base sm:text-lg text-white -mt-2 drop-shadow-lg text-center">
               Successfully exported your likes!
             </h4>
           )}
@@ -257,7 +257,7 @@ export default function Dashboard() {
                           value={playlistName}
                           onChange={(e) => setPlaylistName(e.target.value)}
                           placeholder="Liked Songs Playlist"
-                          className="col-span-3 bg-white"
+                          className="col-span-3 bg-white focus:ring-green-600 focus:border-green-600"
                         />
                       </div>
 
@@ -267,7 +267,7 @@ export default function Dashboard() {
                         </Label>
                         <Input
                           id="picture"
-                          className="col-span-3 bg-white"
+                          className="col-span-3 bg-white focus:ring-green-600 focus:border-green-600"
                           type="file"
                           accept="image/jpg,image/jpeg"
                           onChange={handleImageUpload}
@@ -282,12 +282,17 @@ export default function Dashboard() {
                           id="privatePlaylist"
                           checked={privatePlaylist}
                           onCheckedChange={setPrivatePlaylist}
+                          className="data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-gray-600"
                         />
                       </div>
                     </div>
                     <DialogFooter>
                       <DialogClose asChild={true}>
-                        <Button type="button" variant="default">
+                        <Button
+                          type="button"
+                          variant="default"
+                          className="bg-green-600 hover:bg-green-700 text-white"
+                        >
                           Close
                         </Button>
                       </DialogClose>
