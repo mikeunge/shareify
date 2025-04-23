@@ -53,7 +53,8 @@ export default function TermsOfService() {
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">Contact</h2>
       <p className="mb-4">
-        For any questions about these terms, please contact us through the app’s contact section.
+        If you have any questions or concerns about this privacy policy, feel free to reach out to
+        <a href="mailto:mikeunge@protonmail.com"> mikeunge@protonmail.com</a>.
       </p>
     </div>
   );

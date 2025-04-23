@@ -3,11 +3,11 @@ import Link from 'next/link';
 export default function Footer({ textColor = 'text-gray-800' }) {
   return (
     <div className="flex flex-col items-center">
-      <p className={`${textColor} text-center mt-10`}>
+      <p className={`${textColor} text-center mt-10 drop-shadow`}>
         <Link href="/faq">FAQ</Link> - <Link href="/privacy-policy">Privacy Policy</Link> -{' '}
         <Link href="/terms-of-service">Terms of Service</Link>
       </p>
-      <p className={`${textColor} text-center mt-1`}>
+      <p className={`${textColor} text-center mt-1 drop-shadow`}>
         <b>Shareify</b> is a <b>free</b> and <b>open-source</b> project. If you like it, please
         consider supporting me on{' '}
         <b>

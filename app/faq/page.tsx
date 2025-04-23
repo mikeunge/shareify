@@ -8,7 +8,7 @@ const FAQS = [
   {
     question: 'What does this app do?',
     answer:
-      'It exports your liked songs on Spotify into a public playlist, so you can easily share your music taste with others.'
+      'It exports your (private) liked songs on Spotify into a public playlist, so you can easily share your music taste with others.'
   },
   {
     question: 'Why do I need to log in with Spotify?',
@@ -18,22 +18,16 @@ const FAQS = [
   {
     question: 'Is my data safe?',
     answer:
-      'Yes. Everything happens on the server, and your data is not stored. We only use your token to interact with Spotify during the session.'
+      'Yes. We do not collect or store data. We only use your token to interact with Spotify during the session (which is stored on your device).'
   },
   {
     question: 'Can I change the playlist name?',
-    answer:
-      'Yes, once your liked songs are collected, you can customize the playlist name before it’s created.'
+    answer: "Yes, you can customize the playlist name before it's created."
   },
   {
     question: 'Can I upload a custom cover image?',
     answer:
       'Absolutely! You can upload a custom image to make your playlist look exactly how you want.'
-  },
-  {
-    question: 'Where do error messages appear?',
-    answer:
-      'Any issues will be shown in a toast notification at the bottom right of the screen using our ShadCN toast system.'
   },
   {
     question: 'Will my liked songs be modified?',
