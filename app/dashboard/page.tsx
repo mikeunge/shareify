@@ -257,7 +257,7 @@ export default function Dashboard() {
                           value={playlistName}
                           onChange={(e) => setPlaylistName(e.target.value)}
                           placeholder="Liked Songs Playlist"
-                          className="col-span-3 bg-white focus:ring-green-600 focus:border-green-600"
+                          className="col-span-3 bg-white focus-visible:ring-0 focus-visible:ring-green-600 focus-visible:border-green-600"
                         />
                       </div>
 
