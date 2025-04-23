@@ -30,7 +30,6 @@ export default function PrivacyPolicy() {
       <h2 className="text-2xl font-semibold mt-8 mb-4">No Data Collection</h2>
       <p className="mb-4">
         We do not collect, analyze, or store any personal data, listening history, or user behavior.
-        There is no tracking, analytics, cookies, or external scripts involved.
       </p>
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">Playlist Creation</h2>
@@ -43,6 +42,13 @@ export default function PrivacyPolicy() {
       <h2 className="text-2xl font-semibold mt-8 mb-4">Hosting</h2>
       <p className="mb-4">
         This app is hosted on Vercel. No user-specific data is logged or stored on our servers.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-8 mb-4">Analytics</h2>
+      <p className="mb-4">
+        We use Vercel Analytics to collect basic, anonymized usage data such as page views and
+        performance metrics. This information does not include any personal data and is used solely
+        to improve the app and monitor its performance.
       </p>
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">Questions</h2>
